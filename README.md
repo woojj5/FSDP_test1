@@ -103,7 +103,7 @@ python evaluate_models.py
 - **ROUGE-L**: 가장 긴 공통 부분 수열 기반 유사도
 - **BERTScore-F1**: 각 단어의 의미(vector embedding)를 비교해서 의미적 유사도를 측정하는 지표
 
-평가 결과는 `evaluation_results_{timestamp}.json` 파일에 저장되며, 각 모델의 ROUGE 점수가 비교됩니다.
+평가 결과는 `evaluation_results_{timestamp}.json` 파일에 저장되며, 각 모델의 ROUGE, BERTScore 점수가 비교됩니다.
 
 ## 주의사항
 
