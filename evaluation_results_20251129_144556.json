@@ -1,0 +1,20 @@
+[
+  {
+    "model_name": "google/gemma-2b-it",
+    "checkpoint": "outputs/google_gemma_2b_it/checkpoint-50",
+    "num_samples": 100,
+    "rouge1": 0.3190239490619492,
+    "rouge2": 0.16549501240591127,
+    "rougeL": 0.3004605023217382,
+    "status": "success"
+  },
+  {
+    "model_name": "microsoft/Phi-3-mini-4k-instruct",
+    "checkpoint": "outputs/microsoft_Phi_3_mini_4k_instruct/checkpoint-50",
+    "num_samples": 100,
+    "rouge1": 0.3100699937814302,
+    "rouge2": 0.14362998570580346,
+    "rougeL": 0.2895445952033999,
+    "status": "success"
+  }
+]

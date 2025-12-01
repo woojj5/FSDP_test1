@@ -1,0 +1,12 @@
+[
+  {
+    "model_name": "google/gemma-2b-it",
+    "status": "failed",
+    "error": "string indices must be integers"
+  },
+  {
+    "model_name": "microsoft/Phi-3-mini-4k-instruct",
+    "status": "failed",
+    "error": "string indices must be integers"
+  }
+]

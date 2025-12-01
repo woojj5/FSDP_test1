@@ -1,0 +1,38 @@
+[
+  {
+    "model_name": "google/gemma-2b-it",
+    "checkpoint": "outputs/google_gemma_2b_it/checkpoint-50",
+    "num_samples": 100,
+    "rouge1": 0.3614597580050223,
+    "rouge2": 0.1779370440164811,
+    "rougeL": 0.3453655283538666,
+    "status": "success"
+  },
+  {
+    "model_name": "microsoft/Phi-3-mini-4k-instruct",
+    "checkpoint": "outputs/microsoft_Phi_3_mini_4k_instruct/checkpoint-50",
+    "num_samples": 100,
+    "rouge1": 0.2978200991537242,
+    "rouge2": 0.14796631347668499,
+    "rougeL": 0.2806903226121829,
+    "status": "success"
+  },
+  {
+    "model_name": "meta-llama/Llama-3.2-3B-Instruct",
+    "checkpoint": "outputs/meta_llama_Llama_3.2_3B_Instruct/checkpoint-50",
+    "num_samples": 100,
+    "rouge1": 0.26169032598821085,
+    "rouge2": 0.12822266868125623,
+    "rougeL": 0.24230300685462824,
+    "status": "success"
+  },
+  {
+    "model_name": "Qwen/Qwen2.5-3B-Instruct",
+    "checkpoint": "outputs/Qwen_Qwen2.5_3B_Instruct/checkpoint-50",
+    "num_samples": 100,
+    "rouge1": 0.4348532150150596,
+    "rouge2": 0.18799486491881162,
+    "rougeL": 0.40474150629331035,
+    "status": "success"
+  }
+]

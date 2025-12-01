@@ -1,0 +1,11 @@
+[
+  {
+    "model_name": "google/gemma-2b-it",
+    "output_dir": "outputs/google_gemma_2b_it",
+    "training_time_minutes": 17.0662717,
+    "status": "success",
+    "checkpoint": "outputs/google_gemma_2b_it/checkpoint-50"
+  }
+]0"
+  }
+]

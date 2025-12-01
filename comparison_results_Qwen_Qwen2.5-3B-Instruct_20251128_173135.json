@@ -1,0 +1,9 @@
+[
+  {
+    "model_name": "Qwen/Qwen2.5-3B-Instruct",
+    "output_dir": "outputs/Qwen_Qwen2.5_3B_Instruct",
+    "training_time_minutes": 26.841027883333332,
+    "status": "success",
+    "checkpoint": "outputs/Qwen_Qwen2.5_3B_Instruct/checkpoint-50"
+  }
+]

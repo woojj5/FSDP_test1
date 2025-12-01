@@ -1,0 +1,9 @@
+[
+  {
+    "model_name": "microsoft/Phi-3-mini-4k-instruct",
+    "output_dir": "outputs/microsoft_Phi_3_mini_4k_instruct",
+    "training_time_minutes": 20.154435233333334,
+    "status": "success",
+    "checkpoint": "outputs/microsoft_Phi_3_mini_4k_instruct/checkpoint-50"
+  }
+]

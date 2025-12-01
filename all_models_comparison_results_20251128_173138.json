@@ -1,0 +1,26 @@
+[
+  {
+    "model_name": "google/gemma-2b-it",
+    "output_dir": "outputs/google_gemma_2b_it",
+    "checkpoint": "outputs/google_gemma_2b_it/checkpoint-50",
+    "status": "success"
+  },
+  {
+    "model_name": "microsoft/Phi-3-mini-4k-instruct",
+    "output_dir": "outputs/microsoft_Phi_3_mini_4k_instruct",
+    "checkpoint": "outputs/microsoft_Phi_3_mini_4k_instruct/checkpoint-50",
+    "status": "success"
+  },
+  {
+    "model_name": "meta-llama/Llama-3.2-3B-Instruct",
+    "output_dir": "outputs/meta_llama_Llama_3.2_3B_Instruct",
+    "checkpoint": "outputs/meta_llama_Llama_3.2_3B_Instruct/checkpoint-50",
+    "status": "success"
+  },
+  {
+    "model_name": "Qwen/Qwen2.5-3B-Instruct",
+    "output_dir": "outputs/Qwen_Qwen2.5_3B_Instruct",
+    "checkpoint": "outputs/Qwen_Qwen2.5_3B_Instruct/checkpoint-50",
+    "status": "success"
+  }
+]

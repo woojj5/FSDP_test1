@@ -1,0 +1,9 @@
+[
+  {
+    "model_name": "meta-llama/Llama-3.2-3B-Instruct",
+    "output_dir": "outputs/meta_llama_Llama_3.2_3B_Instruct",
+    "training_time_minutes": 24.059697883333335,
+    "status": "success",
+    "checkpoint": "outputs/meta_llama_Llama_3.2_3B_Instruct/checkpoint-50"
+  }
+]
