@@ -1,6 +1,6 @@
 """
 학습된 모델들의 성능 평가 스크립트
-ROUGE 점수를 사용하여 요약 성능을 비교합니다.
+ROUGE 점수와 BERTScore를 사용하여 요약 성능을 비교합니다.
 """
 
 import torch
@@ -11,6 +11,7 @@ from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
 from rouge_score import rouge_scorer
+from bert_score import score as bert_score
 
 # Hugging Face 인증 처리
 def get_hf_token():
@@ -212,6 +213,10 @@ def evaluate_model(model_config, num_samples=100):
         rouge2_scores = []
         rougeL_scores = []
         
+        # BERTScore를 위한 참조 요약과 생성 요약 리스트
+        reference_summaries = []
+        generated_summaries = []
+        
         num_eval_samples = min(num_samples, len(dataset))
         print(f"테스트 데이터 {num_eval_samples}개 샘플 평가 중...")
         
@@ -286,11 +291,35 @@ def evaluate_model(model_config, num_samples=100):
             rouge1_scores.append(scores['rouge1'].fmeasure)
             rouge2_scores.append(scores['rouge2'].fmeasure)
             rougeL_scores.append(scores['rougeL'].fmeasure)
+            
+            # BERTScore 계산을 위한 데이터 수집
+            reference_summaries.append(reference_summary)
+            generated_summaries.append(summary)
         
         # 평균 점수 계산
         avg_rouge1 = sum(rouge1_scores) / len(rouge1_scores)
         avg_rouge2 = sum(rouge2_scores) / len(rouge2_scores)
         avg_rougeL = sum(rougeL_scores) / len(rougeL_scores)
+        
+        # BERTScore 계산
+        print("BERTScore 계산 중...")
+        try:
+            P, R, F1 = bert_score(
+                generated_summaries,
+                reference_summaries,
+                lang='ko',  # 한국어 데이터셋이므로 한국어 모델 사용
+                verbose=False,
+                device=next(model.parameters()).device
+            )
+            avg_bertscore_precision = P.mean().item()
+            avg_bertscore_recall = R.mean().item()
+            avg_bertscore_f1 = F1.mean().item()
+        except Exception as e:
+            print(f"BERTScore 계산 실패: {e}")
+            # BERTScore 계산 실패 시 기본값 사용
+            avg_bertscore_precision = 0.0
+            avg_bertscore_recall = 0.0
+            avg_bertscore_f1 = 0.0
         
         result = {
             "model_name": model_name,
@@ -299,13 +328,19 @@ def evaluate_model(model_config, num_samples=100):
             "rouge1": avg_rouge1,
             "rouge2": avg_rouge2,
             "rougeL": avg_rougeL,
+            "bertscore_precision": avg_bertscore_precision,
+            "bertscore_recall": avg_bertscore_recall,
+            "bertscore_f1": avg_bertscore_f1,
             "status": "success",
         }
         
         print(f"\n평가 완료: {model_name}")
         print(f"ROUGE-1: {avg_rouge1:.4f}")
         print(f"ROUGE-2: {avg_rouge2:.4f}")
-        print(f"ROUGE-L: {avg_rougeL:.4f}\n")
+        print(f"ROUGE-L: {avg_rougeL:.4f}")
+        print(f"BERTScore Precision: {avg_bertscore_precision:.4f}")
+        print(f"BERTScore Recall: {avg_bertscore_recall:.4f}")
+        print(f"BERTScore F1: {avg_bertscore_f1:.4f}\n")
         
         return result
         
@@ -342,14 +377,14 @@ def main():
     print("\n" + "="*80)
     print("평가 결과 요약")
     print("="*80)
-    print(f"{'모델':<40} {'ROUGE-1':<12} {'ROUGE-2':<12} {'ROUGE-L':<12}")
+    print(f"{'모델':<40} {'ROUGE-1':<10} {'ROUGE-2':<10} {'ROUGE-L':<10} {'BERT-F1':<10}")
     print("-"*80)
     
     for result in results:
         if result.get("status") == "success":
-            print(f"{result['model_name']:<40} {result['rouge1']:<12.4f} {result['rouge2']:<12.4f} {result['rougeL']:<12.4f}")
+            print(f"{result['model_name']:<40} {result['rouge1']:<10.4f} {result['rouge2']:<10.4f} {result['rougeL']:<10.4f} {result.get('bertscore_f1', 0.0):<10.4f}")
         else:
-            print(f"{result['model_name']:<40} {'실패':<12}")
+            print(f"{result['model_name']:<40} {'실패':<10}")
     
     # 최고 성능 모델 찾기
     successful_results = [r for r in results if r.get("status") == "success"]
@@ -357,6 +392,7 @@ def main():
         best_rouge1 = max(successful_results, key=lambda x: x['rouge1'])
         best_rouge2 = max(successful_results, key=lambda x: x['rouge2'])
         best_rougeL = max(successful_results, key=lambda x: x['rougeL'])
+        best_bertscore_f1 = max(successful_results, key=lambda x: x.get('bertscore_f1', 0.0))
         
         print("\n" + "="*80)
         print("최고 성능 모델")
@@ -364,6 +400,7 @@ def main():
         print(f"ROUGE-1 최고: {best_rouge1['model_name']} ({best_rouge1['rouge1']:.4f})")
         print(f"ROUGE-2 최고: {best_rouge2['model_name']} ({best_rouge2['rouge2']:.4f})")
         print(f"ROUGE-L 최고: {best_rougeL['model_name']} ({best_rougeL['rougeL']:.4f})")
+        print(f"BERTScore F1 최고: {best_bertscore_f1['model_name']} ({best_bertscore_f1.get('bertscore_f1', 0.0):.4f})")
     
     print(f"\n상세 결과는 {results_file} 파일에 저장되었습니다.")
 

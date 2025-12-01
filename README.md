@@ -87,6 +87,7 @@ python evaluate_models.py
 
 ```bash
 pip install rouge-score
+pip install bert-score
 ```
 
 ### 2. 평가 실행
@@ -100,6 +101,7 @@ python evaluate_models.py
 - **ROUGE-1**: 단어 단위 유사도
 - **ROUGE-2**: 2-gram 유사도
 - **ROUGE-L**: 가장 긴 공통 부분 수열 기반 유사도
+- **BERTScore-F1**: 각 단어의 의미(vector embedding)를 비교해서 의미적 유사도를 측정하는 지표
 
 평가 결과는 `evaluation_results_{timestamp}.json` 파일에 저장되며, 각 모델의 ROUGE 점수가 비교됩니다.
 
@@ -108,4 +110,3 @@ python evaluate_models.py
 - 각 모델은 모델별 프롬프트 포맷을 사용합니다 (Gemma, Phi-3, Llama-3, Qwen)
 - 모델별 transformer layer class가 자동으로 설정됩니다
 - 일부 모델은 Hugging Face 접근 권한이 필요할 수 있습니다
-
